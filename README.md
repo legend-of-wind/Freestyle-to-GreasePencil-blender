@@ -4,4 +4,4 @@ This is not a complete version and it is under development.\
 It only renders the visible freestyle stroke, the color and linestyle is ignored.
 ## usage
 1.Render the scene with F12 (the render should activate freestyle firstly) \
-2.Run this script in the text editor
+2.Run the script fs2gp.py in the blender's text editor
