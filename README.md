@@ -2,7 +2,7 @@
 Converting freestyle strokes to grease pencil object in blender 2.8x.\
 It supports the lineset,color,alpha of the freestyle strokes.Modifiers on the freestyle stroke's shape is not supported.\
 It's a rebuild version for the freestyle grease pencil exporter on this page https://github.com/folkertdev/freestyle-gpencil-exporter. \
-Some bugs was fixed and it uses a more effcient script with less memory cost.
+Some bugs were fixed and it uses a more effcient script with less memory cost.
 ## usage
 1.Open the edit > preferences > add-ons and install this python script("fs2gp.py").\
 2.Set the output grease pencil object name and stroke layer name in the scene > render panel. (The "use_freestyle" property should be activated).\
