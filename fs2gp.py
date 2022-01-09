@@ -90,7 +90,7 @@ def draw_from_freestyle(fs_stroke_tab):
         gp_stroke = gp_frame.strokes.new()
 
         gp_stroke.display_mode = '3DSPACE'
-        gp_stroke.line_width=20  #base thickness
+        gp_stroke.line_width=9  #base thickness
         gp_stroke.vertex_color_fill=[1,1,1,1]  #base color
         
         gp_stroke.points.add(count=fs_stroke.stroke_vertices_size()) #创建gp笔画
