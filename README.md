@@ -9,5 +9,5 @@ Some bugs were fixed and it uses a more effcient script with less memory cost.
 ![settings.png](https://github.com/legend-of-wind/Freestyle-to-GreasePencil-blender/blob/main/images/settings%20panel.png)\
 3.Render the scene and this add-on will convert the freestyle strokes into gpencil strokes at the end of the rendering process.(Render animation is also supported.)\
 4.An grease pencil object and layer named as you set in the step 2 will be added to the scene. (Make sure the activate object is in the colloction).\
-5.You can view the output grease pencil in the 2D animation workspace,where the color and alpha attribute will be displayed.\
+5.You can set the "viewport shading" as "material preview"to display the color and alpha of the grease pencil.\
 ![output.png](https://github.com/legend-of-wind/Freestyle-to-GreasePencil-blender/blob/main/images/output.png)
