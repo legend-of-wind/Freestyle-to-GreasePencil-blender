@@ -19,8 +19,8 @@ def create_gpencil_frame(scene,frame_cur,layer_name="FSstroke",obj_name="GPencil
         if obj_name in bpy.data.grease_pencils.keys():
             bpy.data.grease_pencils.remove(bpy.data.grease_pencils[obj_name])  #已经删除物体的gp数据清除 
         bpy.ops.object.gpencil_add(location=(0, 0, 0), type='EMPTY')
-        scene.objects[-1].name = obj_name
-        scene.objects[-1].data.name=obj_name
+        bpy.context.collection.objects[-1].name = obj_name  #加入在集合的最后一个
+        bpy.context.collection.objects[-1].data.name=obj_name
 
     gpencil=scene.objects[obj_name].data
 
@@ -56,12 +56,16 @@ class FsGpConvertorPanel(bpy.types.Panel): #面板对象
                 default=True)
         bpy.types.Scene.fs_gp_object_name = bpy.props.StringProperty(
                 name = "Object",  #通过StringProperty定义有GUI的字符串
-                description = "Name of the output Grease Pencil Object",
+                description = "Name of the output Grease Pencil object",
                 default = "GPencil",) 
         bpy.types.Scene.fs_gp_layer_name = bpy.props.StringProperty(
                 name = "Layer", 
-                description = "Name of the output Grease Pencil Layer",
+                description = "Name of the output Grease Pencil layer",
                 default = "FSstroke",) 
+        bpy.types.Scene.basic_line_width = bpy.props.FloatProperty(
+                name = "Basic Line Width", 
+                description = "Basic width of the Grease Pencil strokes",
+                default = 10,)
                 
     @classmethod
     def unregister(cls):
@@ -77,6 +81,7 @@ class FsGpConvertorPanel(bpy.types.Panel): #面板对象
         self.layout.prop(context.scene, 'fs_gp_object_name')
         self.layout.prop(context.scene, 'fs_gp_layer_name')
         self.layout.prop(context.scene, 'use_freestyle_gpencil_convert')
+        self.layout.prop(context.scene, 'basic_line_width')
 
 def draw_from_freestyle(fs_stroke_tab):
     """从freestyle创建gp笔画"""    
@@ -90,16 +95,16 @@ def draw_from_freestyle(fs_stroke_tab):
         gp_stroke = gp_frame.strokes.new()
 
         gp_stroke.display_mode = '3DSPACE'
-        gp_stroke.line_width=9  #base thickness
+        gp_stroke.line_width=scene.basic_line_width  #basic thickness
         gp_stroke.vertex_color_fill=[1,1,1,1]  #base color
         
         gp_stroke.points.add(count=fs_stroke.stroke_vertices_size()) #创建gp笔画
         fs_vert_iter=fs_stroke.vertices_begin() #获取迭代器 从第一个顶点开始
 
         for fs_vert,gp_point in zip(fs_vert_iter,gp_stroke.points):
-            fs_point=fs_vert.point_3d 
+            fs_point=fs_vert.point_3d
             gp_point.co=camera_mat@fs_point
-            
+
             gp_point.pressure = sum(fs_vert.attribute.thickness)/2
             gp_point.vertex_color=list(fs_vert.attribute.color)+[1]
             gp_point.strength=fs_vert.attribute.alpha
